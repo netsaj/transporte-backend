@@ -26,6 +26,16 @@ edit connection params into  database/connection.go file in `init` method.
 ## migrations
 When the server stars run automatically all migrations.
 
+## Settings
+
+### admin user
+If admin user not exist, automatically register a new user
+```text
+username: admin
+password: admin
+``` 
+is recommended change the password in the first login.
+
 ## run
 
 ```bash
