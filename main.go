@@ -1,3 +1,6 @@
+/**
+
+ */
 package main;
 
 import (
@@ -5,10 +8,12 @@ import (
 	"github.com/labstack/echo/middleware"
 	"github.com/netsaj/transporte-backend/internal/controller"
 	"github.com/netsaj/transporte-backend/internal/database"
-	middleware2 "github.com/netsaj/transporte-backend/internal/middleware"
+	"github.com/netsaj/transporte-backend/internal/routes"
+	_ "go/doc"
 	"net/http"
 )
 
+// start echo server
 func main() {
 	database.SyncModels()
 	e := echo.New()
@@ -19,13 +24,11 @@ func main() {
 	// ==== ROUTES =====
 	// - public routes
 	e.POST("/auth/login", controller.AuthMananger{}.Login)
-
-	// protected routes admin
-	admins := middleware2.CreateAdminGroup("/admin", e)
-	controller.UsersManager{}.Init(admins)
+	// administrative routes
+	routes.AdminRoutes(e)
 	// Start server
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-		Format: "method=${method}, uri=${uri}, status=${status}\n",
+		Format: "method=${method}, uri=${uri}, status=${status} \n",
 	}))
 	e.Logger.Fatal(e.Start(":3000"))
 }
