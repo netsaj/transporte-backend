@@ -44,7 +44,7 @@ func (AuthMananger) Login(c echo.Context) (err error) {
 		// Create token
 		token := jwt.New(jwt.SigningMethodHS256)
 		// Set custom claims
-		claims :=  token.Claims.(jwt.MapClaims)
+		claims := token.Claims.(jwt.MapClaims)
 		claims["id"] = user.ID
 		claims["username"] = user.Username
 		claims["admin"] = user.IsAdmin()
@@ -55,9 +55,9 @@ func (AuthMananger) Login(c echo.Context) (err error) {
 			return err
 		}
 		// Generate encoded token and send it as response.
+		c.Response().Header().Set("Authorization", t)
 		return c.JSON(http.StatusOK, map[string]interface{}{
 			"token": t,
-			"user":  user,
 		})
 	}
 	return echo.ErrUnauthorized

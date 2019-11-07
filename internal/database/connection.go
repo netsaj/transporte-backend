@@ -46,9 +46,7 @@ func GetConnection() *gorm.DB {
 func SyncModels() {
 	dbClient := GetConnection()
 	defer dbClient.Close()
-	dbClient.AutoMigrate(
-		&models.User{},
-	)
+
 	// add admin user if no exist
 	var user models.User
 	// find User with username `admin`

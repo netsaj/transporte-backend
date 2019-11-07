@@ -1,0 +1,13 @@
+
+en el recaudo se pide los datos de la empresa
+como un buscador pero la empresa esta asociada al
+vehiculo?
+esto debe ir en la base de datos o es para la vista?
+---
+los conceptos estan por años, si creo una tabla para almacenar los
+SMDLV y SMMLV para calcular los valores se perderia el valor del
+concepto por año al cambiarlo.
+---
+en la tarjeta de operacion, el radicado es una fecha o un numero?
+---
+esa tabla de desvinculacion?

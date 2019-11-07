@@ -6,18 +6,21 @@ package main;
 import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/netsaj/transporte-backend/internal/database"
+	"github.com/netsaj/transporte-backend/internal/database/migrations"
 	"github.com/netsaj/transporte-backend/internal/routes"
 	_ "go/doc"
+	"golang.org/x/crypto/acme/autocert"
 	"net/http"
 )
 
 // Instance echo server and start
 func main() {
 	// sync postgres database
-	database.SyncModels()
+	migrations.CreateTables()
+	migrations.CreateIndexes()
 
 	e := echo.New()
+	e.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
 	e.Debug = true
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
