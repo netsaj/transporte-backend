@@ -9,7 +9,8 @@ func CreateIndexes() {
 	db := database.GetConnection()
 	defer db.Close()
 	// set Users primary key
-	_ = db.Exec("alter table users add constraint users_pk primary key (id);")
+	// _ = db.Exec("alter table users add constraint users_pk primary key (id);")
+
 	// EmpresaVehiculos relationships
 	db.Model(models.EmpresaVehiculo{}).AddForeignKey("empresa_id", "empresas(id)", "RESTRICT", "RESTRICT")
 	db.Model(models.EmpresaVehiculo{}).AddForeignKey("vehiculo_id", "vehiculos(id)", "RESTRICT", "RESTRICT")
@@ -25,6 +26,13 @@ func CreateIndexes() {
 	db.Model(models.Vehiculo{}).AddForeignKey("radio_accion_id", "vehiculo_radios_accion(id)", "RESTRICT", "RESTRICT")
 	db.Model(models.Vehiculo{}).AddForeignKey("nivel_servicio", "vehiculo_niveles_servicio(id)", "RESTRICT", "RESTRICT")
 	db.Model(models.Vehiculo{}).AddForeignKey("matricula_municipio", "municipios(id)", "RESTRICT", "RESTRICT")
+
+	// Unique Index for vehiculos options tables.
+	db.Model(models.VehiculoMarca{}).AddUniqueIndex("marca_nombre_uk", "nombre")
+	db.Model(models.VehiculoNivelServicio{}).AddUniqueIndex("nivel_servicio_nombre_uk", "nombre")
+	db.Model(models.VehiculoRadioAccion{}).AddUniqueIndex("radio_accion_nombre_uk", "nombre")
+	db.Model(models.VehiculoCombustible{}).AddUniqueIndex("combustible_nombre_uk", "nombre")
+	db.Model(models.VehiculoCarroceria{}).AddUniqueIndex("carroceria_nombre_uk", "nombre")
 
 	//Concepto relationships
 	db.Model(models.Concepto{}).AddForeignKey("concepto_base_calculo_id", "conceptos_bases_calculo(id)", "RESTRICT", "RESTRICT")

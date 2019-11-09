@@ -31,6 +31,7 @@ type Vehiculo struct {
 	NumeroMetropolitano string    `gorm:"size:4" json:"numero_metropolitano"`
 	NumeroChip          string    `gorm:"size:6" json:"numero_chip"`
 	// NumeroInterno : created table empresaVehiculo for this relation cuz is only in collective type
+	EsColectivo bool `json:"es_colectivo"`
 }
 
 func (Vehiculo) TableName() string {

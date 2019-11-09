@@ -8,8 +8,10 @@ import (
 	"github.com/labstack/echo/middleware"
 	"github.com/netsaj/transporte-backend/internal/database/migrations"
 	"github.com/netsaj/transporte-backend/internal/routes"
+	"github.com/netsaj/transporte-backend/internal/utils"
 	_ "go/doc"
 	"golang.org/x/crypto/acme/autocert"
+	"gopkg.in/go-playground/validator.v9"
 	"net/http"
 )
 
@@ -18,6 +20,7 @@ func main() {
 	// sync postgres database
 	migrations.CreateTables()
 	migrations.CreateIndexes()
+	migrations.CreateAdminIfNotExist()
 
 	e := echo.New()
 	e.AutoTLSManager.Cache = autocert.DirCache("/var/www/.cache")
@@ -25,6 +28,8 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
+	// validator request
+	e.Validator = &utils.CustomValidator{Validator: validator.New()}
 
 	// authentication routes
 	routes.AuthRoutes(e)

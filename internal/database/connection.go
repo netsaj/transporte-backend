@@ -6,12 +6,9 @@ package database
 
 import (
 	"fmt"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	_ "github.com/lib/pq"
-	"github.com/netsaj/transporte-backend/internal/database/models"
-	"github.com/netsaj/transporte-backend/internal/utils"
 )
 
 // Db uri connection string
@@ -38,29 +35,4 @@ func GetConnection() *gorm.DB {
 		panic("failed connect to database")
 	}
 	return dbClient
-}
-
-// link all models an automigrate to database mapping all changes
-// if not exist a user with username`admin` automatically is created.
-// with username: admin , password: admin
-func SyncModels() {
-	dbClient := GetConnection()
-	defer dbClient.Close()
-
-	// add admin user if no exist
-	var user models.User
-	// find User with username `admin`
-	if err := dbClient.Where("username = ?", "admin").First(&user).Error; err != nil {
-		user.Username = "admin"
-		user.Name = "admin"
-		user.Role = "Administrator"
-		user.Password, _ = utils.Crypto{}.HashPassword("admin")
-		if err = dbClient.Create(&user).Error; err != nil {
-			print(err)
-		}
-		print("User 'admin' create")
-		spew.Dump(&user)
-
-	}
-	println("sync success")
 }

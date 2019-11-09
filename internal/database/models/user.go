@@ -17,9 +17,7 @@ type User struct {
 
 //CheckPassword : Verify user password hash with another string.
 func (u *User) CheckPassword(password string) bool {
-	println(u.Password)
-	println(password)
-	return utils.Crypto{}.CheckPasswordHash(password, u.Password)
+	return utils.CheckPasswordHash(password, u.Password)
 }
 
 func (u User) Json() string {
@@ -35,6 +33,6 @@ func (u User) IsAdmin() bool {
 }
 
 func (u *User) SetPassword(s string) (err error) {
-	u.Password, err = utils.Crypto{}.HashPassword(s)
+	u.Password, err = utils.HashPassword(s)
 	return
 }

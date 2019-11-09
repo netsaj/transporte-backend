@@ -104,7 +104,7 @@ func (UsersManager) UpdatePassword(c echo.Context) error {
 
 	if user.CheckPassword(payload.OldPassword) {
 		println("password match")
-		newPassword, _ := utils.Crypto{}.HashPassword(payload.NewPassword)
+		newPassword, _ := utils.HashPassword(payload.NewPassword)
 		result := DB.Model(&models.User{}).Where("id = ?", id).Update("password", newPassword)
 		if result.Error != nil {
 			panic(result.Error.Error())

@@ -12,12 +12,14 @@ VehiculoMarca Model
 */
 type VehiculoMarca struct {
 	Base
-	Nombre string `json:"nombre"`
+	Nombre string `json:"nombre" gorm:"not null"`
 }
 
 func (VehiculoMarca) TableName() string {
 	return "vehiculo_marcas"
 }
+
+
 
 /**
 
@@ -26,7 +28,7 @@ VehiculoCarroceria Model
 */
 type VehiculoCarroceria struct {
 	Base
-	Nombre string `json:"nombre"`
+	Nombre string `json:"nombre" gorm:"not null"`
 }
 
 func (VehiculoCarroceria) TableName() string {
@@ -40,7 +42,7 @@ VehiculoCombustible Model
 */
 type VehiculoCombustible struct {
 	Base
-	Nombre string `json:"nombre"`
+	Nombre string `json:"nombre" gorm:"not null"`
 }
 
 func (VehiculoCombustible) TableName() string {
@@ -54,7 +56,7 @@ VehiculoRadioAccion Model
 */
 type VehiculoRadioAccion struct {
 	Base
-	Nombre string `json:"nombre"`
+	Nombre string `json:"nombre" gorm:"not null"`
 }
 
 func (VehiculoRadioAccion) TableName() string {
@@ -68,7 +70,7 @@ VehiculoNivelServicio Model
 */
 type VehiculoNivelServicio struct {
 	Base
-	Nombre string `json:"nombre"`
+	Nombre string `json:"nombre" gorm:"not null"`
 }
 
 func (VehiculoNivelServicio) TableName() string {

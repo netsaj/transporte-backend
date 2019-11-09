@@ -10,6 +10,8 @@ type Empresa struct {
 	Telefono               uint32            `gorm:"size:11" json:"telefono"`
 	Email                  string            `gorm:"size:100" json:"email"`
 	EmpresaVehiculos       []EmpresaVehiculo `json:"empresa_vehiculos"`
+	CapacidadGeneradora    uint64            `json:"capacidad_generadora"`
+	EsColectivo            bool              `json:"es_colectivo"`
 }
 
 func (Empresa) TableName() string {
