@@ -7,11 +7,11 @@ import (
 )
 
 /*
-Init all routes for admin Role and set middlewares for validate
+Init all routes for admins Role and set middlewares for validate
 token and authorization token
 */
 func AdminRoutes(e *echo.Echo) {
-	g := e.Group("/admin")
+	g := e.Group("/api/admin")
 	// Configure middlewares
 	g.Use(middlewares.CustomJwtMiddleware(), middlewares.ValidateAdminMiddleware(), )
 	ManagerUsersRoutes(g)

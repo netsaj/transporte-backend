@@ -16,7 +16,7 @@ type AuthMananger struct{}
 type JwtCustomClaims struct {
 	ID       uuid.UUID `json:"id"`
 	Username string    `json:"username"`
-	Admin    bool      `json:"admin"`
+	Admin    bool      `json:"admins"`
 	jwt.StandardClaims
 }
 
@@ -47,7 +47,7 @@ func (AuthMananger) Login(c echo.Context) (err error) {
 		claims := token.Claims.(jwt.MapClaims)
 		claims["id"] = user.ID
 		claims["username"] = user.Username
-		claims["admin"] = user.IsAdmin()
+		claims["admins"] = user.IsAdmin()
 		claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 		// Create token with claims
 		t, err := token.SignedString([]byte("secret"))

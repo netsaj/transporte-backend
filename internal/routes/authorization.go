@@ -9,6 +9,6 @@ import (
 
  */
 func AuthRoutes(e *echo.Echo) {
-	g := e.Group("/auth")
+	g := e.Group("/api/auth")
 	g.POST("/login", controller.AuthMananger{}.Login)
 }

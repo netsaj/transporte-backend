@@ -18,12 +18,63 @@ type SettingsMap struct {
 type SettingsManager struct {
 }
 
+var settingsList = [4]string{"combustibles", "carrocerias", "radios_accion", "niveles_servicio"}
+
 func (SettingsManager) ListOptions(c echo.Context) error {
-	settingsList := [4]string{"combustibles", "carrocerias", "radios_accion", "niveles_servicio"}
+
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"items": &settingsList,
 	})
 }
+
+func (SettingsManager) GetSettingsByResource(c echo.Context) error {
+	resource := strings.ToLower(c.Param("resource"))
+	db := database.GetConnection()
+	defer db.Close()
+	if resource == "combustibles" {
+		items := new([]models.VehiculoCombustible)
+		if err := db.Model(&models.VehiculoCombustible{}).Find(&items, "deleted_at IS NULL"); err.Error != nil {
+			panic(err)
+			return echo.ErrInternalServerError
+		}
+		return c.JSON(http.StatusOK, map[string]interface{}{
+			"resource": resource,
+			"items":    &items,
+		})
+	} else if resource == "radios_accion" {
+		items := new([]models.VehiculoRadioAccion)
+		if err := db.Model(&models.VehiculoRadioAccion{}).Find(&items, "deleted_at IS NULL"); err.Error != nil {
+			panic(err)
+			return echo.ErrInternalServerError
+		}
+		return c.JSON(http.StatusOK, map[string]interface{}{
+			"resource": resource,
+			"items":    &items,
+		})
+	} else if resource == "carrocerias" {
+		items := new([]models.VehiculoCarroceria)
+		if err := db.Model(&models.VehiculoCarroceria{}).Find(&items, "deleted_at IS NULL"); err.Error != nil {
+			panic(err)
+			return echo.ErrInternalServerError
+		}
+		return c.JSON(http.StatusOK, map[string]interface{}{
+			"resource": resource,
+			"items":    &items,
+		})
+	} else if resource == "niveles_servicio" {
+		items := new([]models.VehiculoNivelServicio)
+		if err := db.Model(&models.VehiculoNivelServicio{}).Find(&items, "deleted_at IS NULL"); err.Error != nil {
+			panic(err)
+			return echo.ErrInternalServerError
+		}
+		return c.JSON(http.StatusOK, map[string]interface{}{
+			"resource": resource,
+			"items":    &items,
+		})
+	}
+	return echo.ErrNotFound
+}
+
 func (SettingsManager) Create(c echo.Context) error {
 
 	var payload = new(SettingsMap)

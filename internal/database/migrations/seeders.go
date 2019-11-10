@@ -8,24 +8,24 @@ import (
 )
 
 // link all models an automigrate to database mapping all changes
-// if not exist a user with username`admin` automatically is created.
-// with username: admin , password: admin
+// if not exist a user with username`admins` automatically is created.
+// with username: admins , password: admins
 func CreateAdminIfNotExist() {
 	dbClient := database.GetConnection()
 	defer dbClient.Close()
 
-	// add admin user if no exist
+	// add admins user if no exist
 	var user models.User
-	// find User with username `admin`
-	if err := dbClient.Where("username = ?", "admin").First(&user).Error; err != nil {
-		user.Username = "admin"
-		user.Name = "admin"
+	// find User with username `admins`
+	if err := dbClient.Where("username = ?", "admins").First(&user).Error; err != nil {
+		user.Username = "admins"
+		user.Name = "admins"
 		user.Role = "Administrator"
-		user.Password, _ = utils.HashPassword("admin")
+		user.Password, _ = utils.HashPassword("admins")
 		if err = dbClient.Create(&user).Error; err != nil {
 			print(err)
 		}
-		print("User 'admin' create")
+		print("User 'admins' create")
 		spew.Dump(&user)
 
 	}

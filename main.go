@@ -35,6 +35,8 @@ func main() {
 	routes.AuthRoutes(e)
 	// administrative routes
 	routes.AdminRoutes(e)
+	// routes for all logged users (admins and standards)
+	routes.StandardUsersRoutes(e)
 
 	// Start server
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{

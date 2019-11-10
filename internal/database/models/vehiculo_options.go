@@ -1,6 +1,6 @@
 /**
 Contain all struct for settings and options linked in `Vehiculo` model.
-This options required endpoints for user admin can add & remove.
+This options required endpoints for user admins can add & remove.
 */
 
 package models
@@ -76,3 +76,5 @@ type VehiculoNivelServicio struct {
 func (VehiculoNivelServicio) TableName() string {
 	return "vehiculo_niveles_servicio"
 }
+
+
