@@ -11,6 +11,9 @@ func CreateIndexes() {
 	// set Users primary key
 	// _ = db.Exec("alter table users add constraint users_pk primary key (id);")
 
+	// Empresa unique keys
+	db.Model(models.Empresa{}).AddUniqueIndex("empresa_nit_uk", "nit")
+
 	// EmpresaVehiculos relationships
 	db.Model(models.EmpresaVehiculo{}).AddForeignKey("empresa_id", "empresas(id)", "RESTRICT", "RESTRICT")
 	db.Model(models.EmpresaVehiculo{}).AddForeignKey("vehiculo_id", "vehiculos(id)", "RESTRICT", "RESTRICT")
