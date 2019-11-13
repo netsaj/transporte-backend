@@ -16,10 +16,10 @@ var DbUri string
 
 // Setup connections params for postgres database
 func init() {
-	username := "netsaj"
-	password := "fabioe9009"
-	dbName := "transporte"
-	dbHost := "localhost"
+	username := "knifpeviokvltf"
+	password := "7d75ad000e2f5aca266780785f2839e142cc3d277ba8b45aca5bd69aa685063c"
+	dbName := "d5bqhoj50lgam1"
+	dbHost := "ec2-107-22-160-102.compute-1.amazonaws.com"
 	dbPort := "5432"
 	DbUri = fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", dbHost, dbPort, username, dbName, password)
 }
